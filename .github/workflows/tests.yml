@@ -22,6 +22,8 @@ jobs:
           node-version: 16.x
           cache: "npm"
           cache-dependency-path: api/package-lock.json
+      - run: npm install
+        working-directory: ./api
       - run: npm run build
         working-directory: ./api
       - run: npm test
