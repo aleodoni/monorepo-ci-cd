@@ -11,6 +11,8 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    env:
+      working-directory: api
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -22,6 +24,4 @@ jobs:
           node-version: 16.x
           cache: npm
       - run: npm run build
-        working-directory: api
       - run: npm test
-        working-directory: api
