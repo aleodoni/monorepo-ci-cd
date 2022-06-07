@@ -2,21 +2,18 @@ name: build-test
 
 on:
   pull_request:
-    paths-ignore:
-      - '**.md'
+    branches:
+      - main
   push:
     branches:
       - main
-      - releases/*
-    paths-ignore:
-      - '**.md'
 
 jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node 16.x
@@ -24,7 +21,5 @@ jobs:
         with:
           node-version: 16.x
           cache: npm
-      - run: npm ci
       - run: npm run build
-      - run: npm run format-check
       - run: npm test
