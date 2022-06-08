@@ -1,0 +1,31 @@
+name: build-test-web
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths: 
+    - "web/**"
+  push:
+    branches:
+      - main
+    paths: 
+      - "web/**"
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: "npm"
+          cache-dependency-path: api/package-lock.json
+      - run: npm ci
+        working-directory: ./web
+      - run: npm run build
+        working-directory: ./web
+      - run: npm run test:unit
+        working-directory: ./web
